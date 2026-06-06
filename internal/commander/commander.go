@@ -3,18 +3,21 @@ package commander
 import (
 	"fmt"
 	"log"
+	"slices"
 	"strconv"
 	"strings"
 
+	"github.com/ilydyu/migrator/internal/config"
 	"github.com/ilydyu/migrator/internal/migrator"
 )
 
 type Commander struct {
 	migrator *migrator.Migrator
+	cfg      config.Config
 }
 
-func NewCommander(m *migrator.Migrator) *Commander {
-	return &Commander{migrator: m}
+func NewCommander(cfg config.Config) *Commander {
+	return &Commander{migrator: nil, cfg: cfg}
 }
 
 func (c *Commander) Command(args []string) {
@@ -23,7 +26,15 @@ func (c *Commander) Command(args []string) {
 		return
 	}
 
+	if !slices.ContainsFunc(args, func(s string) bool {
+		return s == "setup" || s == "help" || s == ""
+	}) {
+		c.migrator = migrator.NewMigrator(c.cfg)
+	}
+
 	switch args[1] {
+	case "setup":
+		c.cfg.Setup()
 	case "init":
 		c.migrator.Init()
 	case "create":
@@ -68,7 +79,8 @@ func (c *Commander) Command(args []string) {
 }
 
 func printHelp() {
-	fmt.Println("migrator init - create directory, shema_history and schema_lock table")
+	fmt.Println("migrator setup - create directory and config file")
+	fmt.Println("migrator init - shema_history and schema_lock table")
 	fmt.Println("migrator create [migration name] - create migration. Example: migrator create create_users")
 	fmt.Println("migrator up - apply your migrations")
 	fmt.Println("migrator up dry - show what migration should be apply in the future")

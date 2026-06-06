@@ -36,22 +36,19 @@ func NewMockConfig() Config {
 	}
 }
 
-func NewConfig() Config {
-	cfg := NewMockConfig()
+func (c *Config) Setup() {
 	_, err := os.Stat("db/config.yaml")
 
 	if err == nil {
-
 		data, err := os.ReadFile("db/config.yaml")
 
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		err = yaml.Unmarshal(data, &cfg)
+		err = yaml.Unmarshal(data, c)
 
 		if err != nil {
-			fmt.Println(1)
 			log.Fatal(err)
 		}
 
@@ -68,9 +65,7 @@ func NewConfig() Config {
 			log.Fatal(err)
 		}
 
-		bytes, err := yaml.Marshal(cfg)
-
-		fmt.Println(2)
+		bytes, err := yaml.Marshal(c)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -78,5 +73,5 @@ func NewConfig() Config {
 		os.WriteFile("db/config.yaml", bytes, 0644)
 	}
 
-	return cfg
+	fmt.Println("Directory structure and config file success created")
 }
