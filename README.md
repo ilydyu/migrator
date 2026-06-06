@@ -1,5 +1,5 @@
 ## Install 
-```go install github.com/ilydyu/migrator/cmd/@latest```
+```go install github.com/ilydyu/migrator/cmd/migrator@latest```
 
 ## Usage
 migrator init - create directory, shema_history and schema_lock table
