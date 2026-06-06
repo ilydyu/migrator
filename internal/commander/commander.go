@@ -80,7 +80,7 @@ func (c *Commander) Command(args []string) {
 
 func printHelp() {
 	fmt.Println("migrator setup - create directory and config file")
-	fmt.Println("migrator init - shema_history and schema_lock table")
+	fmt.Println("migrator init - create shema_history and schema_lock table in database")
 	fmt.Println("migrator create [migration name] - create migration. Example: migrator create create_users")
 	fmt.Println("migrator up - apply your migrations")
 	fmt.Println("migrator up dry - show what migration should be apply in the future")

@@ -2,7 +2,23 @@
 ```go install github.com/ilydyu/migrator/cmd/migrator@latest```
 
 ## Usage
-migrator init - create directory, shema_history and schema_lock table
+
+First, create directory struct and config ```migrator setup```
+
+Second, need create tables for migrator ```migrator init```
+
+Third, create your migration ```migrator create create_users```
+
+Four, write sql and apply your migration ```migrator up```
+
+You are awesome
+
+
+## Help
+
+migrator setup - create directory and config file
+
+migrator init - create shema_history and schema_lock table in database
 
 migrator create [migration name] - create migration. Example: migrator create create_users
 
